@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Taxi Tallet</string>
+    <string name="title_activity_main">Taxi Tallet</string>
+    <string name="package_name">com.kinetonic.taxitallet</string>
+    <string name="custom_url_scheme">com.kinetonic.taxitallet</string>
+</resources>

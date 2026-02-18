@@ -1,0 +1,9 @@
+{
+  "name": "taxitallet",
+  "integrations": {
+    "cordova": {
+      "enabled": false
+    }
+  },
+  "type": "angular"
+}

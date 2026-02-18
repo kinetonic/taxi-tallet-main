@@ -1,0 +1,93 @@
+<ion-content class="ridecab-content">
+
+  <!-- Carte d'authentification -->
+  <div class="auth-box">
+
+    <!-- Section En-tête/Illustration -->
+    <div class="header-section">
+      
+      <div class="app-title">
+        <h1>Connectez-vous à Votre</h1>
+        <h1 class="highlight">Compte Taxi Tallet</h1>
+      </div>
+    </div><br>
+
+    <!-- Section Commencer 
+    <div class="get-started-section" *ngIf="isLogin">
+      <p class="description-text">
+        Vivez une Mobilité Fluide Avec Uber - Votre Compagnon de Trajet Ultime.
+      </p>
+    </div>-->
+
+    <!-- Formulaire de Connexion -->
+    <form *ngIf="isLogin" class="form">
+      <ion-item lines="none" class="input-item">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input
+          placeholder="Adresse e-mail"
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          autocomplete="email"
+          class="custom-input">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          [type]="isPasswordVisible ? 'text' : 'password'"
+          placeholder="Mot de passe"
+          [(ngModel)]="password"
+          name="password"
+          autocomplete="current-password"
+          class="custom-input">
+        </ion-input>
+        <ion-icon
+          [name]="isPasswordVisible ? 'eye-off-outline' : 'eye-outline'"
+          slot="end"
+          (click)="togglePasswordVisibility()"
+          class="eye-icon">
+        </ion-icon>
+      </ion-item>
+
+      <div class="forgot-password">
+        <a (click)="onForgotPassword()">Mot de passe oublié ?</a>
+      </div>
+
+      <!-- Bouton Continuer -->
+      <ion-button expand="block" class="continue-btn" (click)="onLogin()">
+        Continuer
+      </ion-button>
+
+      <!-- Options Alternatives -->
+      <div class="alternative-login">
+        <div class="divider">
+          <span class="divider-line"></span>
+          <span class="divider-text">Ou continuer avec</span>
+          <span class="divider-line"></span>
+        </div>
+        
+        <div class="social-buttons">
+          <ion-button fill="outline" class="social-btn google-btn">
+            <ion-icon name="logo-google" slot="start"></ion-icon>
+            Google
+          </ion-button>
+          
+          <ion-button fill="outline" class="social-btn facebook-btn">
+            <ion-icon name="logo-facebook" slot="start"></ion-icon>
+            Facebook
+          </ion-button>
+        </div>
+      </div>
+ 
+      <!-- Section Inscription -->
+      <div class="signup-section">
+        Pas encore membre ? <a (click)="registerPage()" class="signup-btn">
+          S'inscrire
+        </a>
+      </div>
+    </form>
+  </div>
+
+</ion-content>

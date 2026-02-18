@@ -1,0 +1,239 @@
+.ridecab-content {
+  --background: linear-gradient(180deg, #4078f2 0%, #fff 65%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 5vh 5%;
+
+  /* === HEADER SECTION === */
+  .header-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: clamp(2vh, 5vh, 10vh);
+    margin-bottom: clamp(1vh, 2vh, 4vh);
+    flex: 0 0 auto;
+
+    .taxi-image {
+      width: min(70%, 350px);
+      height: auto;
+      object-fit: contain;
+      max-height: 200px;
+      
+      @media (min-width: 768px) {
+        max-height: 250px;
+      }
+      
+      @media (min-width: 1024px) {
+        max-height: 300px;
+      }
+    }
+  }
+
+  /* === AUTH BOX === */
+  .auth-box {
+        background: #FFFFFF;
+    width: 100%;
+    border-radius: 20px 20px 0px 0px;
+    padding: clamp(20px, 8vw, 40px) clamp(15px, 6vw, 40px);
+    color: #fff;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    flex: 0 0 auto;
+    position: absolute;
+    bottom: 0;
+
+    .tab-switch {
+      display: flex;
+      justify-content: center;
+      background: transparent;
+      border-radius: clamp(20px, 4vw, 30px);
+      padding: 4px;
+      margin-bottom: clamp(20px, 6vw, 30px);
+      color: black;
+
+      button {
+        flex: 1;
+        padding: clamp(10px, 3vw, 14px) 0;
+        border: none;
+        border-radius: clamp(18px, 3.5vw, 25px);
+        background: transparent;
+        color: #FFFFFF;
+        font-weight: 600;
+        font-size: clamp(13px, 3.5vw, 16px);
+        transition: all 0.3s ease;
+        cursor: pointer;
+
+        /* Improve touch targets on mobile */
+        min-height: 44px;
+
+        &.active {
+          background: #4078f2;
+          color: #FFFFFF;
+        }
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+    }
+
+    .form {
+      width: 100%;
+    }
+
+    .input-item {
+      --background: transparent;
+      border: 1px solid #333;
+      border-radius: clamp(12px, 3vw, 16px);
+      margin-bottom: clamp(12px, 3vw, 16px);
+      color: #aaa;
+      padding: 0 8px;
+      min-height: 52px;
+
+      @media (min-width: 768px) {
+        min-height: 56px;
+      }
+
+      ion-icon {
+        color: #4078f2;
+        font-size: clamp(16px, 4vw, 20px);
+      }
+
+      ion-input {
+        color: #000;
+        font-size: clamp(14px, 3.5vw, 16px);
+        --padding-start: 8px;
+        
+        /* Larger font on tablets */
+        @media (min-width: 768px) {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin-bottom: clamp(16px, 4vw, 24px);
+
+      a {
+        color: #4078f2;
+        font-size: clamp(12px, 3vw, 14px);
+        text-decoration: none;
+        cursor: pointer;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .login-btn {
+      --background: #4078f2;
+      --background-hover: #e6c100;
+      --background-activated: #d9b600;
+      color: #111;
+      border-radius: clamp(12px, 3vw, 16px);
+      --border-radius: clamp(12px, 3vw, 16px);
+      font-weight: 600;
+      height: clamp(46px, 10vw, 52px);
+      font-size: clamp(14px, 3.5vw, 17px);
+      margin: 8px 0;
+
+      @media (min-width: 768px) {
+        height: 52px;
+        font-size: 17px;
+      }
+    }
+
+    .divider {
+      margin: clamp(14px, 4vw, 20px) 0;
+      color: #999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: clamp(12px, 3vw, 14px);
+      position: relative;
+
+      span {
+        background: white;
+        padding: 0 clamp(8px, 2vw, 12px);
+        z-index: 2;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background: #333;
+        left: 0;
+        top: 50%;
+        z-index: 1;
+      }
+    }
+
+    .google-btn {
+      --border-color: #000;
+      --border-width: 1px;
+      --border-style: solid;
+      color: #000;
+      border-radius: clamp(12px, 3vw, 16px);
+      --border-radius: clamp(12px, 3vw, 16px);
+      font-weight: 500;
+      height: clamp(46px, 10vw, 52px);
+      font-size: clamp(14px, 3.5vw, 17px);
+      margin: 8px 0;
+
+      @media (min-width: 768px) {
+        height: 52px;
+        font-size: 17px;
+      }
+
+      ion-icon {
+        color: #4078f2;
+        font-size: clamp(16px, 4vw, 20px);
+      }
+
+      &:hover {
+        --border-color: #444;
+        background: rgba(255, 255, 255, 0.05);
+      }
+    }
+  }
+}
+
+/* Extra small devices optimization */
+@media (max-height: 600px) and (orientation: landscape) {
+  .ridecab-content {
+    padding: 2vh 5%;
+    
+    .header-section {
+      margin-top: 1vh;
+      margin-bottom: 1vh;
+      
+      .taxi-image {
+        max-height: 120px;
+      }
+    }
+    
+    .auth-box {
+      margin-bottom: 1vh;
+      padding: 15px 20px;
+    }
+  }
+}
+
+/* Very large screens */
+@media (min-width: 1400px) {
+  .ridecab-content {
+    padding: 10vh 5%;
+    
+    .header-section {
+      margin-top: 8vh;
+      margin-bottom: 4vh;
+    }
+  }
+}

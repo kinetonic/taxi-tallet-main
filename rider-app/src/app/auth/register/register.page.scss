@@ -1,0 +1,116 @@
+.auth-content {
+  --background: #ffffff;
+}
+
+.auth-wrapper {
+  max-width: 420px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 30px;
+
+  ion-icon {
+    font-size: 36px;
+    color: var(--ion-color-primary);
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 10px 0 4px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #6b7280;
+  }
+}
+
+.card {
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 16px;
+}
+      
+.field {
+  --background: #f9fafb;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  padding: 4px 8px;
+
+  ion-icon {
+    color: #6b7280;
+  }
+}
+
+.action-icon {
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.primary-btn {
+  margin-top: 20px;
+  height: 48px;
+  font-weight: 600;
+  border-radius: 12px;
+}
+
+.footer-text {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 18px;
+
+  a {
+    margin-left: 5px;
+    color: var(--ion-color-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+}
+
+/* OTP */
+.otp-card {
+  text-align: center;
+}
+
+.otp-header ion-icon {
+  font-size: 32px;
+  color: var(--ion-color-primary);
+  margin-bottom: 6px;
+}
+
+.otp-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+
+  input {
+    width: 46px;
+    height: 56px;
+    font-size: 22px;
+    text-align: center;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: var(--ion-color-primary);
+    background: #ffffff;
+  }
+}
+
+.otp-footer {
+  margin-top: 12px;
+  font-size: 14px;
+
+  a {
+    color: var(--ion-color-primary);
+    font-weight: 600;
+    cursor: pointer;
+  }
+}

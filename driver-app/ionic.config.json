@@ -1,0 +1,9 @@
+{
+  "name": "driver-app",
+  "integrations": {
+    "cordova": {
+      "enabled": false
+    }
+  },
+  "type": "angular"
+}

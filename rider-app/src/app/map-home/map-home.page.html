@@ -1,0 +1,131 @@
+<ion-content>
+  <!-- Map Container -->
+  <div #mapContainer id="map"></div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Chargement de la carte...</p>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-container" *ngIf="!isLoading">
+    <ion-toolbar style="--background:white;border-radius: 14px;padding: 7px 0;">
+      <ion-buttons slot="start">
+        <ion-button style="background: #ffffff;">
+          <strong style="font-size: 1rem;">Taxi Tallet</strong>
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="profile()">
+          <ion-avatar size="small" style="width: 50px;height: 50px;">
+            <img src="https://cdn.dribbble.com/users/5135626/avatars/normal/8e6fbe27d62bf863c9f9c764a9661028.png?1695835949" />
+          </ion-avatar>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+
+  <!-- Current Location FAB -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" style="bottom: 16rem;position: absolute;" *ngIf="!isLoading">
+    <ion-fab-button (click)="centerOnUser()" style="--background: white; --color: #3880ff;">
+      <ion-icon name="locate"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- Bottom Sheet -->
+  <div class="bottom-sheet" *ngIf="!findTaxi && !isLoading">
+    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px; gap: 8px;">
+      <ion-button 
+        fill="outline" 
+        shape="round" 
+        style="flex: 1;height: 45px;--border-radius: 14px;--border-width: 2px;--border-color: var(--ion-color-medium);--background: var(--ion-color-light);--color: var(--ion-color-medium);font-size: 15px;font-weight: 800;"
+        [color]="selectedOption === 'taxi' ? 'primary' : 'medium'" (click)="selectedOption = 'taxi'">
+        Taxi
+      </ion-button>
+      <ion-button 
+        fill="outline" 
+        shape="round" 
+        style="flex: 1;height: 45px;--border-radius: 14px;--border-width: 2px;--border-color: var(--ion-color-medium);--background: var(--ion-color-light);--color: var(--ion-color-medium);font-size: 15px;font-weight: 800;"
+        [color]="selectedOption === 'reservation' ? 'primary' : 'medium'" (click)="selectedOption = 'reservation'">
+        Réservation
+      </ion-button>
+    </div>
+    
+    <div class="location-info">
+      <div class="location-item">
+        <ion-icon name="location" class="location-icon"></ion-icon>
+        <div class="location-text">
+          <div class="label">VOTRE POSITION</div>
+          <div class="address">{{ currentAddress }}</div>
+        </div>
+      </div>
+      <div class="location-item">
+        <ion-icon name="navigate" class="location-icon"></ion-icon>
+        <div class="location-text">
+          <ion-input 
+            [(ngModel)]="searchQuery" 
+            (ionInput)="searchAddress($event)" 
+            (ionBlur)="onBlur()" 
+            placeholder="Rechercher une destination..." 
+            clearInput>
+          </ion-input>
+        </div>
+      </div>
+
+      <!-- Autocomplete Results -->
+      <div *ngIf="showAutocomplete && autocompleteResults.length > 0" class="autocomplete-container">
+        <div 
+          *ngFor="let result of autocompleteResults" 
+          class="autocomplete-item"
+          (click)="selectAddress(result)"
+        >
+          <div class="item-main">{{ result.display_name.split(',')[0] }}</div>
+          <div class="item-secondary">{{ result.display_name.split(',').slice(1).join(',') }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ride Confirmation Bottom Sheet -->
+  <div class="bottom-sheet" *ngIf="findTaxi && !isLoading">
+    <div class="location-info">
+      <div class="location-item">
+        <ion-avatar size="small" style="width: 50px;height: 50px;">
+          <img src="https://cdn.dribbble.com/users/5135626/avatars/normal/8e6fbe27d62bf863c9f9c764a9661028.png?1695835949" />
+        </ion-avatar>
+        <div class="location-text">
+          <div class="label">Wassim Mahroug</div>
+          <div class="address">Taxi - 301</div>
+        </div>
+        <button class="control-button">
+          <ion-icon name="call"></ion-icon>
+        </button>
+      </div>
+
+      <div class="location-item">
+        <ion-icon name="cash-outline" class="location-icon"></ion-icon>
+        <div class="location-text">
+          <div class="label">{{ rideEstimate.price }}</div>
+          <div class="address">{{ rideEstimate.distance }} - {{ rideEstimate.duration }}</div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px; gap: 8px;">
+      <ion-button 
+        expand="block" 
+        class="confirm-button"
+        (click)="confirmRide()"
+        [disabled]="!destinationAddress">
+        Confirmer 
+      </ion-button>
+      <ion-button 
+        expand="block" 
+        class="cancel-button"
+        (click)="searchAroundMe()">
+        Annuler
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

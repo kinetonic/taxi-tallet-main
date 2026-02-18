@@ -1,0 +1,61 @@
+<ion-content class="ridecab-content">
+
+  <!-- Header / Illustration -->
+  <div class="header-section">
+    <img src="assets/taxi-ulli.webp" alt="Taxi Illustration" class="taxi-image" />
+  </div>
+
+  <!-- Auth Card -->
+  <div class="auth-box">
+    <!-- Login/Register Tabs -->
+    <div class="tab-switch">
+      <h1>Connecter a taxi driver</h1>
+    </div>
+
+    <!-- Login Form -->
+    <form *ngIf="isLogin" class="form">
+      <ion-item lines="none" class="input-item">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input
+          placeholder="Phone number"
+          type="tel"
+          [(ngModel)]="phoneNumber"
+          name="phone"
+          autocomplete="tel">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          [type]="isPasswordVisible ? 'text' : 'password'"
+          placeholder="Password"
+          [(ngModel)]="password"
+          name="password"
+          autocomplete="current-password">
+        </ion-input>
+        <ion-icon
+          [name]="isPasswordVisible ? 'eye-off-outline' : 'eye-outline'"
+          slot="end"
+          (click)="togglePasswordVisibility()">
+        </ion-icon>
+      </ion-item>
+
+      <div class="forgot-password">
+        <a (click)="onForgotPassword()">Forgot password?</a>
+      </div>
+
+      <ion-button expand="block" class="login-btn" (click)="onLogin()">Login</ion-button>
+
+      <div class="divider">
+        <span>or</span>
+      </div>
+
+      <ion-button expand="block" fill="outline" class="google-btn">
+        <ion-icon name="logo-google" slot="start"></ion-icon>
+        Continue with Google
+      </ion-button>
+    </form>
+  </div>
+
+</ion-content>

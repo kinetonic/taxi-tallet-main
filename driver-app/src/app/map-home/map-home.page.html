@@ -1,0 +1,237 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="profile()">
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">
+      <div class="header-title">
+        <span>Driver App</span>
+        <ion-badge [color]="driverStatus.online ? 'success' : 'medium'" class="status-badge">
+          {{ driverStatus.online ? 'En ligne' : 'Hors ligne' }}
+        </ion-badge>
+      </div>
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleNotifications()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge color="danger" *ngIf="unreadNotificationsCount > 0" class="notification-badge">
+          {{ unreadNotificationsCount }}
+        </ion-badge>
+      </ion-button>
+      <ion-button (click)="toggleEarnings()">
+        <ion-icon slot="icon-only" name="cash"></ion-icon>
+      </ion-button>
+      <ion-button (click)="testNotification()">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="map"></div>
+
+  <!-- Online/Offline Toggle -->
+  <div class="floating-card status-card">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Statut du conducteur</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="status-controls">
+          <ion-button 
+            [color]="driverStatus.online ? 'success' : 'medium'" 
+            expand="block"
+            (click)="toggleOnlineStatus()">
+            <ion-icon slot="start" [name]="driverStatus.online ? 'radio-button-on' : 'radio-button-off'"></ion-icon>
+            {{ driverStatus.online ? 'EN LIGNE' : 'HORS LIGNE' }}
+          </ion-button>
+          
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-value">{{ driverStatus.earning }} DT</div>
+              <div class="stat-label">Gains</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">{{ driverStatus.completedRides }}</div>
+              <div class="stat-label">Courses</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">⭐ {{ driverStatus.rating }}</div>
+              <div class="stat-label">Note</div>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Current Location Card -->
+  <div class="floating-card location-card">
+    <ion-card>
+      <ion-card-content>
+        <div class="location-info">
+          <ion-icon name="navigate" color="primary"></ion-icon>
+          <div class="location-text">
+            <div class="location-label">Votre position</div>
+            <div class="location-address">{{ currentAddress }}</div>
+          </div>
+          <ion-button fill="clear" size="small" (click)="centerOnDriver()">
+            <ion-icon name="locate"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Current Ride Details -->
+  <div class="floating-card ride-card" *ngIf="showRideDetails && currentRide">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Course en cours</ion-card-title>
+        <ion-card-subtitle>
+          {{ currentRide.passenger.name }} ⭐ {{ currentRide.passenger.rating }}
+        </ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="ride-info">
+          <div class="ride-step">
+            <div class="step-marker pickup"></div>
+            <div class="step-content">
+              <div class="step-label">Prise en charge</div>
+              <div class="step-address">{{ currentRide.pickup.address }}</div>
+            </div>
+          </div>
+          
+          <div class="ride-step">
+            <div class="step-marker destination"></div>
+            <div class="step-content">
+              <div class="step-label">Destination</div>
+              <div class="step-address">{{ currentRide.destination.address }}</div>
+            </div>
+          </div>
+          
+          <div class="ride-stats">
+            <div class="ride-stat">
+              <ion-icon name="distance"></ion-icon>
+              <span>{{ currentRide.distance }}</span>
+            </div>
+            <div class="ride-stat">
+              <ion-icon name="time"></ion-icon>
+              <span>{{ currentRide.duration }}</span>
+            </div>
+            <div class="ride-stat">
+              <ion-icon name="cash"></ion-icon>
+              <span>{{ currentRide.fare }} DT</span>
+            </div>
+          </div>
+          
+          <div class="ride-actions">
+            <ion-button expand="block" color="primary" (click)="startRide()">
+              <ion-icon slot="start" name="play"></ion-icon>
+              Démarrer
+            </ion-button>
+            <ion-button expand="block" color="success" (click)="completeRide()">
+              <ion-icon slot="start" name="checkmark"></ion-icon>
+              Terminer
+            </ion-button>
+            <ion-button expand="block" color="danger" (click)="cancelCurrentRide()">
+              <ion-icon slot="start" name="close"></ion-icon>
+              Annuler
+            </ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Notifications Panel -->
+  <ion-modal [isOpen]="showNotifications" (didDismiss)="showNotifications = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Notifications</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="showNotifications = false">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item *ngFor="let notification of notifications" 
+                   [class.unread]="!notification.read"
+                   (click)="markNotificationAsRead(notification.id)">
+            <ion-icon [name]="getNotificationIcon(notification.type)" 
+                     slot="start" 
+                     [color]="getNotificationColor(notification.type)"></ion-icon>
+            <ion-label>
+              <h3>{{ notification.title }}</h3>
+              <p>{{ notification.message }}</p>
+              <p class="timestamp">{{ notification.timestamp | date:'HH:mm' }}</p>
+            </ion-label>
+          </ion-item>
+          
+          <ion-item *ngIf="notifications.length === 0">
+            <ion-label class="ion-text-center">
+              <h3>Aucune notification</h3>
+              <p>Les nouvelles notifications apparaîtront ici</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        
+        <ion-button expand="block" color="medium" fill="clear" (click)="clearAllNotifications()" 
+                   *ngIf="notifications.length > 0" class="clear-button">
+          Tout marquer comme lu
+        </ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Earnings Panel -->
+  <ion-modal [isOpen]="showEarnings" (didDismiss)="showEarnings = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Gains du jour</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="showEarnings = false">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="earnings-summary">
+          <div class="earning-total">
+            <div class="amount">{{ driverStatus.earning }} DT</div>
+            <div class="label">Total gagné aujourd'hui</div>
+          </div>
+          
+          <div class="earning-details">
+            <div class="earning-item">
+              <div class="earning-label">Courses complétées</div>
+              <div class="earning-value">{{ driverStatus.completedRides }}</div>
+            </div>
+            <div class="earning-item">
+              <div class="earning-label">Moyenne par course</div>
+              <div class="earning-value">
+                {{ driverStatus.completedRides > 0 ? (driverStatus.earning / driverStatus.completedRides).toFixed(1) : 0 }} DT
+              </div>
+            </div>
+            <div class="earning-item">
+              <div class="earning-label">Note moyenne</div>
+              <div class="earning-value">⭐ {{ driverStatus.rating }}</div>
+            </div>
+          </div>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

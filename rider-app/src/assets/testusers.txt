@@ -1,0 +1,6 @@
+email : john.rider@example.com
+password : Password123!
+
+
+email : fatma.bm@example.tn
+passwodrd : password

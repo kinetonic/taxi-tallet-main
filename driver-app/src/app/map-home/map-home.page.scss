@@ -1,0 +1,361 @@
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+.floating-card {
+  position: absolute;
+  z-index: 1000;
+  width: 90%;
+  left: 5%;
+  right: 5%;
+  
+  &.status-card {
+    top: 70px;
+  }
+  
+  &.location-card {
+    bottom: 20px;
+  }
+  
+  &.ride-card {
+    bottom: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.status-badge {
+  font-size: 0.7rem;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 0.7rem;
+  padding: 2px 4px;
+}
+
+/* Custom Markers */
+.custom-marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  .marker-pin {
+    background: var(--ion-color-primary);
+    border: 3px solid white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    
+    ion-icon {
+      color: white;
+    }
+  }
+}
+
+.driver-marker {
+  .driver-pulse {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+}
+
+.pickup-marker .marker-pin {
+  background: var(--ion-color-success);
+}
+
+.destination-marker .marker-pin {
+  background: var(--ion-color-warning);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* Status Controls */
+.status-controls {
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+    
+    .stat-item {
+      text-align: center;
+      
+      .stat-value {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--ion-color-primary);
+      }
+      
+      .stat-label {
+        font-size: 0.8rem;
+        color: var(--ion-color-medium);
+      }
+    }
+  }
+}
+
+/* Location Info */
+.location-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  
+  .location-text {
+    flex: 1;
+    
+    .location-label {
+      font-size: 0.9rem;
+      color: var(--ion-color-medium);
+      margin-bottom: 4px;
+    }
+    
+    .location-address {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+}
+
+/* Ride Details */
+.ride-info {
+  .ride-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+    
+    .step-marker {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-top: 4px;
+      flex-shrink: 0;
+      
+      &.pickup {
+        background: var(--ion-color-success);
+      }
+      
+      &.destination {
+        background: var(--ion-color-warning);
+      }
+    }
+    
+    .step-content {
+      flex: 1;
+      
+      .step-label {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      
+      .step-address {
+        font-size: 0.9rem;
+        color: var(--ion-color-medium);
+      }
+    }
+  }
+  
+  .ride-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    padding: 16px;
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    
+    .ride-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      
+      ion-icon {
+        font-size: 1.5rem;
+        color: var(--ion-color-primary);
+      }
+      
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+  
+  .ride-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* Notifications */
+ion-item.unread {
+  --background: rgba(var(--ion-color-primary-rgb), 0.1);
+  border-left: 4px solid var(--ion-color-primary);
+}
+
+.timestamp {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  margin-top: 4px;
+}
+
+.clear-button {
+  margin: 16px;
+}
+
+/* In-app Notifications */
+.in-app-notification {
+  --width: 85%;
+  --max-width: 350px;
+  
+  .alert-wrapper {
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  
+  .alert-head {
+    background: var(--ion-color-primary);
+    color: white;
+    padding: 16px;
+    text-align: center;
+    
+    .alert-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+  
+  .alert-message {
+    padding: 20px 16px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--ion-color-dark);
+  }
+  
+  .alert-button-group {
+    padding: 0 16px 16px;
+    
+    .alert-button {
+      background: var(--ion-color-primary);
+      color: white;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+  }
+}
+
+/* Earnings */
+.earnings-summary {
+  padding: 20px;
+  
+  .earning-total {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-secondary));
+    border-radius: 16px;
+    color: white;
+    
+    .amount {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    
+    .label {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+  }
+  
+  .earning-details {
+    .earning-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--ion-color-light);
+      
+      .earning-label {
+        color: var(--ion-color-medium);
+      }
+      
+      .earning-value {
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+/* Popups */
+.pickup-popup, .destination-popup {
+  font-size: 14px;
+  line-height: 1.4;
+  
+  strong {
+    color: var(--ion-color-primary);
+  }
+}
+
+/* Responsive Design */
+@media (max-height: 700px) {
+  .floating-card.ride-card {
+    max-height: 50vh;
+  }
+}
+
+@media (min-width: 768px) {
+  .floating-card {
+    width: 400px;
+    left: unset;
+    
+    &.status-card {
+      right: 20px;
+      top: 80px;
+    }
+    
+    &.location-card {
+      right: 20px;
+      bottom: 20px;
+    }
+    
+    &.ride-card {
+      right: 20px;
+      bottom: 20px;
+      width: 400px;
+    }
+  }
+}
